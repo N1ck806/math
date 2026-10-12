@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="prose">
+
+    <h1>Итоговый тест</h1>
+    <p class="lead">
+        Ответьте на все вопросы последовательно. После правильного ответа
+        откроется следующий шаг. Ошибка — это возможность разобраться
+        в материале, а не повод для наказания.
+    </p>
+
+    <!-- Заголовок с прогрессом -->
+    <div class="quiz-header">
+        <div class="quiz-counter">
+            Вопрос {{ index + 1 }} из {{ total }}
+        </div>
+        <div class="progress-track"
+             role="progressbar"
+             aria-valuemin="0" aria-valuemax="100"
+             aria-valuenow="{{ ((index) / total * 100) | round | int }}"
+             aria-label="Прогресс прохождения теста">
+            <div class="progress-fill"
+                 style="width: {{ ((index) / total * 100) | round | int }}%;"></div>
+        </div>
+    </div>
+
+    <!-- Карточка вопроса -->
+    <section class="quiz-question"
+             data-quiz-root
+             data-qid="{{ question.id }}"
+             data-type="{{ question.type }}"
+             data-csrf="{{ csrf_token }}"
+             aria-labelledby="quiz-prompt">
+
+        <p id="quiz-prompt" class="quiz-prompt">{{ question.prompt }}</p>
+
+        {% if question.type == 'single' %}
+        <fieldset class="quiz-options">
+            <legend class="visually-hidden">Выберите один вариант ответа</legend>
+            {% for opt in question.options %}
+            <label class="option">
+                <input type="radio" name="answer" value="{{ opt.key }}">
+                <span><strong>{{ opt.key }}.</strong> {{ opt.text }}</span>
+            </label>
+            {% endfor %}
+        </fieldset>
+
+        {% elif question.type == 'multiple' %}
+        <fieldset class="quiz-options">
+            <legend class="visually-hidden">Выберите один или несколько вариантов ответа</legend>
+            {% for opt in question.options %}
+            <label class="option">
+                <input type="checkbox" name="answer" value="{{ opt.key }}">
+                <span><strong>{{ opt.key }}.</strong> {{ opt.text }}</span>
+            </label>
+            {% endfor %}
+        </fieldset>
+
+        {% else %}
+        <label class="quiz-input">
+            Ответ:
+            <input type="text" name="answer" inputmode="decimal"
+                   autocomplete="off" aria-label="Введите числовой ответ">
+        </label>
+        {% endif %}
+
+        <div class="quiz-actions">
+            <button type="button" class="btn btn-primary" data-check>
+                Проверить ответ
+            </button>
+            <button type="button" class="btn btn-primary" data-next hidden>
+                Следующий вопрос
+                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6" fill="none"
+                          stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <button type="button" class="btn btn-secondary" data-retry hidden>
+                Попробовать ещё раз
+            </button>
+        </div>
+
+        <div class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+    </section>
+
+    <!-- Перезапуск теста -->
+    <form method="post" action="{{ url_for('quiz_restart') }}" class="quiz-restart">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+        <button type="submit" class="btn btn-secondary">Начать тест заново</button>
+    </form>
+</article>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+{% endblock %}

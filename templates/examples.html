@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="prose">
+
+    <h1>Разобранные примеры</h1>
+
+    <p class="lead">
+        Каждый пример содержит условие, план решения, формулы, подстановку,
+        промежуточные вычисления, итог и пояснение. Попробуйте решить
+        самостоятельно, затем раскройте решение.
+    </p>
+
+    {% for ex in examples %}
+    <section class="example" aria-labelledby="example-{{ ex.id }}-title">
+        <h2 id="example-{{ ex.id }}-title">{{ ex.title }}</h2>
+
+        <!-- Условие -->
+        <div class="example-block">
+            <h3>Условие</h3>
+            <p>{{ ex.condition }}</p>
+            <p><strong>Что требуется найти.</strong> {{ ex.goal }}</p>
+        </div>
+
+        <!-- План -->
+        <div class="example-plan">
+            <h3>План решения</h3>
+            <ol>
+                {% for step in ex.plan %}<li>{{ step }}</li>{% endfor %}
+            </ol>
+        </div>
+
+        <!-- Решение -->
+        <details class="solution-details">
+            <summary>Показать решение</summary>
+
+            <h3>Промежуточные вычисления</h3>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <span class="summary-label">Среднее <em>x̄</em></span>
+                    <span class="summary-value">{{ ex.fit.x_mean | fmtnum }}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Среднее <em>ȳ</em></span>
+                    <span class="summary-value">{{ ex.fit.y_mean | fmtnum }}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Числитель</span>
+                    <span class="summary-value">{{ ex.fit.extras.numerator | fmtnum }}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Знаменатель</span>
+                    <span class="summary-value">{{ ex.fit.extras.denominator | fmtnum }}</span>
+                </div>
+            </div>
+
+            <p>
+                <strong>Наклон:</strong>
+                a = {{ ex.fit.extras.numerator | fmtnum }} /
+                {{ ex.fit.extras.denominator | fmtnum }} =
+                {{ ex.fit.a | fmtnum }}.
+            </p>
+            <p>
+                <strong>Свободный член:</strong>
+                b = {{ ex.fit.y_mean | fmtnum }} − {{ ex.fit.a | fmtnum }} ·
+                {{ ex.fit.x_mean | fmtnum }} = {{ ex.fit.b | fmtnum }}.
+            </p>
+
+            <div class="statement">
+                <p><strong>Итоговое уравнение:</strong> {{ ex.fit.equation() }}</p>
+                <p><strong>SSE =</strong> {{ ex.fit.sse | fmtnum }}</p>
+            </div>
+
+            <h3>Предсказания и остатки</h3>
+            <div class="table-wrap" tabindex="0" role="region"
+                 aria-label="Таблица предсказаний и остатков">
+                <table class="calc-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">x</th>
+                            <th scope="col">y</th>
+                            <th scope="col">ŷ</th>
+                            <th scope="col">e</th>
+                            <th scope="col">e²</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range(ex.fit.n) %}
+                        <tr>
+                            <td>{{ ex.fit.x[i] | fmtnum }}</td>
+                            <td>{{ ex.fit.y[i] | fmtnum }}</td>
+                            <td>{{ ex.fit.y_hat[i] | fmtnum }}</td>
+                            <td>{{ ex.fit.residuals[i] | fmtnum }}</td>
+                            <td>{{ (ex.fit.residuals[i] ** 2) | fmtnum }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th scope="row" colspan="4">Сумма e²</th>
+                            <td><strong>{{ ex.fit.sse | fmtnum }}</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <h3>Пояснение</h3>
+            <p>{{ ex.interpretation }}</p>
+
+            <div class="mini-task">
+                <strong>Задание для закрепления.</strong> {{ ex.self_task }}
+            </div>
+        </details>
+    </section>
+    {% endfor %}
+</article>
+
+{% set learned_items = [
+    'Каждый пример проходит путь: условие → план → формула → подстановка → ответ.',
+    'Числа в примерах совпадают с программными вычислениями.',
+    'Идеальная прямая даёт SSE = 0 — это частный случай.'
+] %}
+{% set next_url = url_for('lab') %}
+{% set next_label = 'Перейти в лабораторию' %}
+{% include 'partials/whats_learned.html' %}
+{% endblock %}

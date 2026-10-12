@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="prose content--wide">
+
+    <h1>Интерактивная лаборатория</h1>
+
+    <p class="lead">
+        Изменяйте точки, добавляйте и удаляйте наблюдения, сравнивайте
+        прямую МНК с произвольной прямой. Все результаты пересчитываются
+        на сервере — график и коэффициенты всегда согласованы.
+    </p>
+
+    {% if error %}
+    <div class="alert alert-error" role="alert" aria-live="polite">
+        <strong>Не удалось выполнить расчёт.</strong> {{ error }}
+    </div>
+    {% endif %}
+
+    <form method="post" action="{{ url_for('lab') }}" class="lab-layout"
+          data-lab-form novalidate>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+        <!-- ================== Левая колонка: данные ================== -->
+        <section class="lab-panel" aria-labelledby="lab-points-title">
+            <h2 id="lab-points-title">Экспериментальные точки</h2>
+
+            <div class="points-table" data-points-table>
+                {% for x, y in points %}
+                <div class="point-row">
+                    <label>
+                        <span>x</span>
+                        <input type="text" name="x[]" value="{{ x | fmtnum }}"
+                               inputmode="decimal" autocomplete="off"
+                               aria-label="Значение x">
+                    </label>
+                    <label>
+                        <span>y</span>
+                        <input type="text" name="y[]" value="{{ y | fmtnum }}"
+                               inputmode="decimal" autocomplete="off"
+                               aria-label="Значение y">
+                    </label>
+                    <button type="button" class="btn-remove"
+                            data-remove-point
+                            aria-label="Удалить точку">×</button>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="lab-buttons">
+                <button type="button" class="btn btn-secondary" data-add-point>
+                    Добавить точку
+                </button>
+                <button type="submit" name="action" value="calculate"
+                        class="btn btn-primary" data-lab-submit>
+                    Рассчитать МНК
+                </button>
+                <button type="submit" name="action" value="reset"
+                        class="btn btn-secondary">Сбросить</button>
+                <button type="submit" name="action" value="load_example"
+                        class="btn btn-secondary">Загрузить пример</button>
+            </div>
+
+            <h2>Сравнение с произвольной прямой</h2>
+            <p class="text-muted">
+                Введите свои коэффициенты, чтобы увидеть их SSE на тех же данных.
+            </p>
+            <div class="manual-coeffs">
+                <label>
+                    <span>a</span>
+                    <input type="text" name="manual_a" value="{{ manual_a or '' }}"
+                           inputmode="decimal" autocomplete="off">
+                </label>
+                <label>
+                    <span>b</span>
+                    <input type="text" name="manual_b" value="{{ manual_b or '' }}"
+                           inputmode="decimal" autocomplete="off">
+                </label>
+                <button type="submit" name="action" value="compare"
+                        class="btn btn-secondary">Сравнить</button>
+            </div>
+
+            <p class="lab-hint">
+                Для единственности решения нужно минимум две точки
+                с разными значениями x.
+            </p>
+        </section>
+
+        <!-- ================== Правая колонка: результат ================== -->
+        <section class="lab-panel" aria-labelledby="lab-result-title">
+            <h2 id="lab-result-title">Результат</h2>
+
+            {% if fit %}
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <span class="summary-label">Уравнение</span>
+                    <span class="summary-value">{{ fit.equation() }}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">a</span>
+                    <span class="summary-value">{{ fit.a | fmtnum }}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">b</span>
+                    <span class="summary-value">{{ fit.b | fmtnum }}</span>
+                </div>
+                <div class="summary-item summary-item-accent">
+                    <span class="summary-label">SSE</span>
+                    <span class="summary-value">{{ fit.sse | fmtnum }}</span>
+                </div>
+            </div>
+
+            {% if sse_manual is not none %}
+            {% set cmp_class = 'is-worse' if sse_manual > fit.sse
+                                else ('is-better' if sse_manual < fit.sse else 'is-equal') %}
+            <div class="model-compare {{ cmp_class }}" role="status">
+                <p>
+                    <strong>Ваша прямая:</strong>
+                    ŷ = {{ manual_a_val | fmtnum }}·x + {{ manual_b_val | fmtnum }},
+                    SSE = {{ sse_manual | fmtnum }}.
+                </p>
+                {% if sse_manual > fit.sse %}
+                <p>Это <strong>больше</strong> SSE МНК. По критерию метода прямая МНК лучше.</p>
+                {% elif sse_manual < fit.sse %}
+                <p>Это <strong>меньше</strong> SSE МНК. Проверьте ввод: по определению
+                   МНК даёт минимум.</p>
+                {% else %}
+                <p>Значение <strong>совпадает</strong> с SSE МНК.</p>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <h3>Предсказания и остатки</h3>
+            <div class="table-wrap" tabindex="0" role="region"
+                 aria-label="Таблица предсказаний и остатков">
+                <table class="calc-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">x</th>
+                            <th scope="col">y</th>
+                            <th scope="col">ŷ</th>
+                            <th scope="col">e</th>
+                            <th scope="col">e²</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in range(fit.n) %}
+                        <tr>
+                            <td>{{ fit.x[i] | fmtnum }}</td>
+                            <td>{{ fit.y[i] | fmtnum }}</td>
+                            <td>{{ fit.y_hat[i] | fmtnum }}</td>
+                            <td>{{ fit.residuals[i] | fmtnum }}</td>
+                            <td>{{ (fit.residuals[i] ** 2) | fmtnum }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th scope="row" colspan="4">Сумма e²</th>
+                            <td><strong>{{ fit.sse | fmtnum }}</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            {% else %}
+            <p class="text-muted">
+                Введите корректные данные, чтобы увидеть результат.
+            </p>
+            {% endif %}
+        </section>
+    </form>
+</article>
+
+{% set learned_items = [
+    'Лаборатория пересчитывает МНК на сервере при каждом изменении данных.',
+    'Произвольная прямая сравнивается с МНК по одной и той же сумме квадратов остатков.',
+    'Если все x одинаковы, решение не единственно — лаборатория сообщит об этом.'
+] %}
+{% set next_url = url_for('practice') %}
+{% set next_label = 'Перейти к практическим заданиям' %}
+{% include 'partials/whats_learned.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/lab.js') }}"></script>
+{% endblock %}

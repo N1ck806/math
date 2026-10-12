@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="prose">
+
+    <h1>Результаты тестирования</h1>
+
+    {% if no_data %}
+    <div class="alert alert-info">
+        <strong>Тест ещё не начат.</strong>
+        <a href="{{ url_for('quiz') }}">Перейти к тесту</a>, чтобы увидеть
+        свои результаты.
+    </div>
+    {% else %}
+
+    <!-- ================== Круговой индикатор + итог ================== -->
+    <section class="results-hero" aria-labelledby="results-summary-title">
+        {% set dash = 2 * 3.14159 * 60 %}
+        {% set offset = dash * (1 - percent / 100) %}
+        <div class="result-dial" aria-hidden="true">
+            <svg viewBox="0 0 140 140">
+                <defs>
+                    <linearGradient id="dialGradient" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#4776E6"/>
+                        <stop offset="100%" stop-color="#19A7A0"/>
+                    </linearGradient>
+                </defs>
+                <circle class="track" cx="70" cy="70" r="60"></circle>
+                <circle class="fill"
+                        cx="70" cy="70" r="60"
+                        stroke-dasharray="{{ dash | round(1) }}"
+                        stroke-dashoffset="{{ offset | round(1) }}"></circle>
+            </svg>
+            <div class="result-dial-value">{{ percent }}%</div>
+        </div>
+
+        <div>
+            <h2 id="results-summary-title" style="margin-top:0;">{{ grade }}</h2>
+            <p>{{ grade_note }}</p>
+            <p class="scale-note">
+                Шкала учебная и не является официальной университетской
+                системой оценивания.
+            </p>
+        </div>
+    </section>
+
+    <!-- ================== Числовые показатели ================== -->
+    <section class="results-grid" aria-label="Числовые показатели">
+        <div class="result-card">
+            <div class="result-value">{{ correct_count }} / {{ total_questions }}</div>
+            <div class="result-label">Верных ответов</div>
+        </div>
+        <div class="result-card">
+            <div class="result-value">{{ percent }}%</div>
+            <div class="result-label">Процент правильных</div>
+        </div>
+        <div class="result-card">
+            <div class="result-value">{{ attempts_total }}</div>
+            <div class="result-label">Всего попыток</div>
+        </div>
+        <div class="result-card">
+            <div class="result-value">{{ points_earned }} / {{ points_max }}</div>
+            <div class="result-label">Баллы</div>
+        </div>
+    </section>
+
+    <!-- ================== Сильные стороны ================== -->
+    {% if strong_labels %}
+    <section aria-labelledby="results-strong">
+        <h2 id="results-strong">Сильные стороны</h2>
+        <ul>
+            {% for label in strong_labels %}
+            <li>{{ label }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+
+    <!-- ================== Темы для повторения ================== -->
+    {% if recommendations %}
+    <section aria-labelledby="results-recommend">
+        <h2 id="results-recommend">Темы, которые стоит повторить</h2>
+        <ul>
+            {% for rec in recommendations %}
+            <li>
+                <strong>{{ rec.topic }}.</strong>
+                {{ rec.advice }}
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+
+    <!-- ================== Действия ================== -->
+    <div class="results-actions">
+        <a class="btn btn-primary" href="{{ url_for('quiz') }}">
+            Пройти тест снова
+        </a>
+        <a class="btn btn-secondary" href="{{ url_for('formulas') }}">
+            Открыть справочник формул
+        </a>
+        <a class="btn btn-secondary" href="{{ url_for('theory') }}">
+            Повторить теорию
+        </a>
+    </div>
+
+    {% endif %}
+</article>
+{% endblock %}

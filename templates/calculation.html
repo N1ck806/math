@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="prose">
+
+    <h1>Методика вычислений</h1>
+
+    <p class="lead">
+        Ниже — пошаговый алгоритм вычисления коэффициентов МНК на конкретном
+        наборе данных. Все числа в таблице рассчитаны программно и согласованы
+        с формулами.
+    </p>
+
+    <!-- ================== Шаги ================== -->
+    <section aria-labelledby="calc-steps">
+        <h2 id="calc-steps">Алгоритм: 12 шагов</h2>
+
+        <ol class="steps">
+            <li>Собрать экспериментальные данные.</li>
+            <li>Вычислить среднее <em>x̄</em>.</li>
+            <li>Вычислить среднее <em>ȳ</em>.</li>
+            <li>Рассчитать отклонения <em>x<sub>i</sub> − x̄</em> и <em>y<sub>i</sub> − ȳ</em>.</li>
+            <li>Найти произведения отклонений.</li>
+            <li>Вычислить квадраты отклонений <em>(x<sub>i</sub> − x̄)²</em>.</li>
+            <li>Рассчитать коэффициент наклона <em>a</em>.</li>
+            <li>Найти свободный член <em>b</em>.</li>
+            <li>Записать итоговое уравнение.</li>
+            <li>Вычислить предсказанные значения и остатки.</li>
+            <li>Найти сумму квадратов остатков.</li>
+            <li>Интерпретировать результат.</li>
+        </ol>
+    </section>
+
+    <!-- ================== Ключевые величины ================== -->
+    <section aria-labelledby="calc-summary">
+        <h2 id="calc-summary">Ключевые величины</h2>
+
+        <div class="summary-grid">
+            <div class="summary-item">
+                <span class="summary-label">Среднее <em>x̄</em></span>
+                <span class="summary-value">{{ fit.x_mean | fmtnum }}</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">Среднее <em>ȳ</em></span>
+                <span class="summary-value">{{ fit.y_mean | fmtnum }}</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">Числитель формулы <em>a</em></span>
+                <span class="summary-value">{{ fit.extras.numerator | fmtnum }}</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">Знаменатель формулы <em>a</em></span>
+                <span class="summary-value">{{ fit.extras.denominator | fmtnum }}</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================== Таблица ================== -->
+    <section aria-labelledby="calc-table">
+        <h2 id="calc-table">Таблица вычислений</h2>
+
+        <p>
+            Каждая строка — одно наблюдение. В последней строке — сумма по столбцу,
+            которая используется в формулах.
+        </p>
+
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Таблица вычислений">
+            <table class="calc-table">
+                <thead>
+                    <tr>
+                        <th scope="col">i</th>
+                        <th scope="col">x<sub>i</sub></th>
+                        <th scope="col">y<sub>i</sub></th>
+                        <th scope="col">x<sub>i</sub> − x̄</th>
+                        <th scope="col">y<sub>i</sub> − ȳ</th>
+                        <th scope="col">Произв.</th>
+                        <th scope="col">(x<sub>i</sub> − x̄)²</th>
+                        <th scope="col">ŷ<sub>i</sub></th>
+                        <th scope="col">e<sub>i</sub></th>
+                        <th scope="col">e<sub>i</sub>²</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in rows %}
+                    <tr>
+                        <td>{{ r.i }}</td>
+                        <td>{{ r.x | fmtnum }}</td>
+                        <td>{{ r.y | fmtnum }}</td>
+                        <td>{{ r.x_centered | fmtnum }}</td>
+                        <td>{{ r.y_centered | fmtnum }}</td>
+                        <td>{{ r.product | fmtnum }}</td>
+                        <td>{{ r.x_centered_squared | fmtnum }}</td>
+                        <td>{{ r.y_hat | fmtnum }}</td>
+                        <td>{{ r.residual | fmtnum }}</td>
+                        <td>{{ r.residual_squared | fmtnum }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th scope="row" colspan="5">Сумма</th>
+                        <td>{{ fit.extras.numerator | fmtnum }}</td>
+                        <td>{{ fit.extras.denominator | fmtnum }}</td>
+                        <td colspan="2">—</td>
+                        <td><strong>{{ fit.sse | fmtnum }}</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </section>
+
+    <!-- ================== Итог ================== -->
+    <section aria-labelledby="calc-result">
+        <h2 id="calc-result">Итоговый результат</h2>
+
+        <div class="statement">
+            <p><strong>Уравнение модели:</strong> {{ fit.equation() }}</p>
+            <p><strong>Сумма квадратов остатков:</strong> SSE = {{ fit.sse | fmtnum }}</p>
+        </div>
+
+        <p>
+            Таблица сформирована из реальных вычислений Python: если изменить
+            данные, все числа пересчитаются автоматически.
+        </p>
+    </section>
+</article>
+
+{% set learned_items = [
+    'Алгоритм МНК состоит из 12 шагов: от сбора данных до интерпретации.',
+    'Таблица вычислений показывает вклад каждой точки в общую сумму.',
+    'Числитель и знаменатель формулы наклона — суммы по всем точкам.'
+] %}
+{% set next_url = url_for('examples') %}
+{% set next_label = 'Перейти к разобранным примерам' %}
+{% include 'partials/whats_learned.html' %}
+{% endblock %}

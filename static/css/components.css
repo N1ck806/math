@@ -1,0 +1,930 @@
+/* ============================================================
+   components.css — визуальный язык компонентов
+   ============================================================ */
+
+/* ---------- 1. Кнопки ---------- */
+.btn {
+    --btn-bg: var(--accent);
+    --btn-color: #FFFFFF;
+    --btn-border: transparent;
+    --btn-shadow: var(--shadow-xs);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: 10px 18px;
+    min-height: 42px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--btn-border);
+    background: var(--btn-bg);
+    color: var(--btn-color);
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: var(--btn-shadow);
+    transition:
+        background-color var(--dur-fast) var(--ease-out),
+        border-color var(--dur-fast) var(--ease-out),
+        color var(--dur-fast) var(--ease-out),
+        box-shadow var(--dur-fast) var(--ease-out),
+        transform var(--dur-fast) var(--ease-out);
+}
+.btn:hover { text-decoration: none; transform: translateY(-1px); box-shadow: var(--shadow-soft); }
+.btn:active { transform: translateY(0); box-shadow: var(--shadow-xs); }
+.btn:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+
+/* Основная */
+.btn-primary { --btn-bg: var(--accent); --btn-color: #FFFFFF; }
+.btn-primary:hover { --btn-bg: var(--accent-strong); }
+
+/* Вторичная */
+.btn-secondary {
+    --btn-bg: var(--surface);
+    --btn-color: var(--navy);
+    --btn-border: var(--border);
+}
+.btn-secondary:hover { --btn-bg: var(--accent-soft); --btn-border: var(--border-strong); }
+
+/* Текстовая */
+.btn-text {
+    --btn-bg: transparent;
+    --btn-color: var(--accent);
+    --btn-shadow: none;
+    padding: 6px 8px;
+    min-height: auto;
+}
+.btn-text:hover { --btn-bg: var(--accent-soft); transform: none; }
+
+/* Кнопка-иконка */
+.btn-icon {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    min-height: auto;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--navy);
+    border: 1px solid var(--border);
+    box-shadow: none;
+}
+.btn-icon:hover { background: var(--accent-soft); transform: none; }
+
+/* Состояния */
+.btn[disabled],
+.btn.is-disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    pointer-events: none;
+}
+.btn.is-loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+}
+.btn.is-loading::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    color: var(--btn-color);
+    animation: btn-spin 0.7s linear infinite;
+}
+@keyframes btn-spin { to { transform: rotate(360deg); } }
+
+.btn-success { --btn-bg: var(--success); --btn-color: #FFFFFF; }
+.btn-danger  { --btn-bg: var(--error);   --btn-color: #FFFFFF; }
+
+/* Кнопка удаления точки */
+.btn-remove {
+    align-self: end;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--error);
+    font-size: 1.05rem;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+        background-color var(--dur-fast) var(--ease-out),
+        border-color var(--dur-fast) var(--ease-out);
+}
+.btn-remove:hover { background: var(--error-soft); border-color: color-mix(in srgb, var(--error) 40%, transparent); }
+.btn-remove:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+
+/* Кнопка копирования */
+.btn-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font: inherit;
+    font-size: var(--fs-xs);
+    cursor: pointer;
+    transition:
+        background-color var(--dur-fast) var(--ease-out),
+        color var(--dur-fast) var(--ease-out),
+        border-color var(--dur-fast) var(--ease-out);
+}
+.btn-copy:hover { background: var(--accent-soft); color: var(--accent-strong); border-color: var(--border-strong); }
+.btn-copy:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+.btn-copy.is-copied { color: var(--success); border-color: color-mix(in srgb, var(--success) 45%, transparent); background: var(--success-soft); }
+
+/* ---------- 2. Бейджи и метки этапов ---------- */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+    border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.badge-teal    { background: var(--teal-soft);    color: var(--teal);    border-color: color-mix(in srgb, var(--teal) 25%, transparent); }
+.badge-success { background: var(--success-soft); color: var(--success); border-color: color-mix(in srgb, var(--success) 25%, transparent); }
+.badge-error   { background: var(--error-soft);   color: var(--error);   border-color: color-mix(in srgb, var(--error) 25%, transparent); }
+
+/* ---------- 3. Карточки ---------- */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-xs);
+    transition:
+        transform var(--dur-fast) var(--ease-out),
+        border-color var(--dur-fast) var(--ease-out),
+        box-shadow var(--dur-fast) var(--ease-out);
+}
+.card > *:first-child { margin-top: 0; }
+.card > *:last-child { margin-bottom: 0; }
+
+.card-interactive {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+.card-interactive:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+}
+.card-interactive:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+}
+
+.card-title { margin: 0 0 var(--space-2); font-size: var(--fs-h3); }
+.card-text  { color: var(--text-secondary); margin: 0; }
+
+/* ---------- 4. Обложка главной страницы (hero) ---------- */
+.hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(24px, 4vw, 56px);
+    align-items: center;
+    padding: clamp(28px, 5vw, 56px);
+    background: linear-gradient(180deg, var(--surface), var(--surface-alt));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    isolation: isolate;
+}
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: -40% -20% auto auto;
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+}
+.hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-4);
+}
+.hero h1 {
+    font-size: var(--fs-hero);
+    margin: 0 0 var(--space-3);
+    letter-spacing: -0.025em;
+}
+.hero-subtitle {
+    font-size: var(--fs-lg);
+    color: var(--navy);
+    margin: 0 0 var(--space-3);
+    max-width: 46ch;
+}
+.hero-description {
+    color: var(--text-secondary);
+    max-width: 52ch;
+    margin: 0 0 var(--space-5);
+}
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+.hero-meta {
+    margin-top: var(--space-5);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    font-size: var(--fs-sm);
+    color: var(--text-secondary);
+}
+.hero-meta-item { display: inline-flex; align-items: center; gap: 6px; }
+.hero-meta-item::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+}
+.hero-illustration {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hero-illustration img { width: 100%; height: auto; max-width: 520px; }
+
+/* ---------- 5. Секции и заголовки страниц ---------- */
+.section { margin: var(--space-7) 0; }
+.section-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+}
+.section-title { margin: 0; font-size: var(--fs-h2); }
+.section-subtitle { margin: 0; color: var(--text-secondary); max-width: 62ch; }
+
+/* ---------- 6. Сетка карточек возможностей ---------- */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-4);
+}
+.feature-card {
+    position: relative;
+    padding: var(--space-5);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-xs);
+    transition:
+        transform var(--dur-fast) var(--ease-out),
+        border-color var(--dur-fast) var(--ease-out),
+        box-shadow var(--dur-fast) var(--ease-out);
+}
+.feature-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+    box-shadow: var(--shadow-md);
+}
+.feature-card h3 { margin: 0 0 var(--space-2); font-size: 1.05rem; }
+.feature-card p  { margin: 0; color: var(--text-secondary); }
+.feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: var(--space-3);
+    border-radius: var(--radius-sm);
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+}
+
+/* ---------- 7. Учебный маршрут ---------- */
+.route {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--space-3);
+    margin: var(--space-5) 0;
+}
+.route-step {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: var(--space-4);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: inherit;
+    transition:
+        transform var(--dur-fast) var(--ease-out),
+        border-color var(--dur-fast) var(--ease-out),
+        box-shadow var(--dur-fast) var(--ease-out);
+}
+.route-step:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+}
+.route-step:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+.route-num {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent-strong);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+.route-title { font-weight: 600; color: var(--navy); }
+.route-hint  { font-size: var(--fs-xs); color: var(--text-secondary); }
+
+/* ---------- 8. Информационный блок «для кого / что нужно» ---------- */
+.info-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+    padding: var(--space-5);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-xs);
+}
+.info-block h3 { margin: 0 0 var(--space-2); font-size: 1rem; }
+.info-block p  { margin: 0; color: var(--text-secondary); }
+
+/* ---------- 9. Раскрывающиеся блоки ---------- */
+details.solution-details {
+    margin-top: var(--space-4);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    overflow: hidden;
+    transition: box-shadow var(--dur-fast) var(--ease-out);
+}
+details.solution-details[open] { box-shadow: var(--shadow-soft); }
+details.solution-details > summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--accent-strong);
+    background: var(--surface-alt);
+    list-style: none;
+    user-select: none;
+    transition: background-color var(--dur-fast) var(--ease-out);
+}
+details.solution-details > summary::-webkit-details-marker { display: none; }
+details.solution-details > summary::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(-45deg);
+    transition: transform var(--dur) var(--ease-out);
+}
+details.solution-details[open] > summary::before { transform: rotate(45deg); }
+details.solution-details > summary:hover { background: var(--accent-soft); }
+details.solution-details > summary:focus-visible { outline: none; box-shadow: inset var(--shadow-focus); }
+details.solution-details > *:not(summary) {
+    padding: 0 var(--space-4);
+}
+details.solution-details > *:not(summary):first-of-type { padding-top: var(--space-4); }
+details.solution-details > *:not(summary):last-child  { padding-bottom: var(--space-4); }
+
+/* ---------- 10. Примеры ---------- */
+.example {
+    padding: var(--space-5) 0;
+    border-top: 1px solid var(--border);
+}
+.example:first-of-type { border-top: none; padding-top: 0; }
+.example > h2 { margin-top: 0; }
+.example-goal {
+    display: inline-block;
+    margin: 0 0 var(--space-3);
+    color: var(--text-secondary);
+    font-size: var(--fs-sm);
+}
+.example-plan {
+    background: var(--surface-alt);
+    border-left: 3px solid var(--teal);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
+    margin: var(--space-3) 0 var(--space-4);
+}
+.example-plan ol { margin: 0; padding-left: 1.2em; }
+
+/* ---------- 11. Лаборатория ---------- */
+.lab-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+    gap: var(--space-5);
+    margin-top: var(--space-4);
+}
+.lab-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-xs);
+}
+.lab-panel h2 { margin-top: 0; font-size: var(--fs-h3); }
+
+.points-table { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-3); }
+.point-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: var(--space-2);
+    align-items: end;
+}
+.point-row label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: var(--fs-xs);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+.point-row input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--text-primary);
+    font: inherit;
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+    transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.point-row input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: var(--shadow-focus);
+}
+.point-row input.is-invalid {
+    border-color: var(--error);
+    background: var(--error-soft);
+}
+.point-row.is-changed {
+    animation: point-flash var(--dur-slow) var(--ease-out);
+}
+@keyframes point-flash {
+    0%   { background: color-mix(in srgb, var(--accent) 15%, transparent); }
+    100% { background: transparent; }
+}
+
+.lab-buttons { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-3) 0; }
+.manual-coeffs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    align-items: end;
+}
+.manual-coeffs label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: var(--fs-xs);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+.manual-coeffs input {
+    width: 110px;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--text-primary);
+    font: inherit;
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+}
+.manual-coeffs input:focus { outline: none; border-color: var(--accent); box-shadow: var(--shadow-focus); }
+
+/* Сравнение моделей */
+.model-compare {
+    margin-top: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface-alt);
+    font-size: 0.95rem;
+}
+.model-compare.is-worse  { border-color: color-mix(in srgb, var(--success) 35%, transparent); background: var(--success-soft); }
+.model-compare.is-better { border-color: color-mix(in srgb, var(--error) 35%, transparent);   background: var(--error-soft); }
+.model-compare.is-equal  { border-color: color-mix(in srgb, var(--accent) 35%, transparent);  background: var(--accent-soft); }
+
+/* ---------- 12. Практика и тест ---------- */
+.practice-card,
+.quiz-question {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+    margin-bottom: var(--space-4);
+    box-shadow: var(--shadow-xs);
+}
+.practice-card h2 { margin-top: 0; font-size: var(--fs-h3); }
+
+.practice-options,
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: var(--space-3) 0;
+}
+.option {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    cursor: pointer;
+    transition:
+        background-color var(--dur-fast) var(--ease-out),
+        border-color var(--dur-fast) var(--ease-out),
+        box-shadow var(--dur-fast) var(--ease-out);
+}
+.option:hover { background: var(--accent-soft); border-color: var(--border-strong); }
+.option:focus-within { border-color: var(--accent); box-shadow: var(--shadow-focus); }
+.option input { margin-top: 4px; accent-color: var(--accent); }
+.option span { flex: 1; }
+.option.is-correct {
+    background: var(--success-soft);
+    border-color: color-mix(in srgb, var(--success) 45%, transparent);
+}
+.option.is-wrong {
+    background: var(--error-soft);
+    border-color: color-mix(in srgb, var(--error) 45%, transparent);
+}
+
+.practice-input,
+.quiz-input {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: var(--space-3) 0;
+    font-size: 0.95rem;
+}
+.practice-input input,
+.quiz-input input {
+    width: 160px;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--text-primary);
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+}
+.practice-input input:focus,
+.quiz-input input:focus { outline: none; border-color: var(--accent); box-shadow: var(--shadow-focus); }
+
+.practice-actions,
+.quiz-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+}
+
+.practice-feedback,
+.quiz-feedback { margin-top: var(--space-3); }
+
+.feedback-correct {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--success);
+    font-weight: 600;
+}
+.feedback-error {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--error);
+    font-weight: 600;
+}
+.feedback-explanation {
+    margin: var(--space-2) 0 0;
+    padding: var(--space-3) var(--space-4);
+    background: var(--surface-alt);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+.feedback-explanation strong { color: var(--navy); }
+
+/* Заголовок теста */
+.quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+}
+.quiz-counter {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+}
+.quiz-header .progress-track {
+    flex: 1;
+    min-width: 160px;
+    height: 6px;
+    background: var(--border);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+}
+.quiz-header .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--teal));
+    border-radius: inherit;
+    transition: width var(--dur-slow) var(--ease-out);
+}
+.quiz-prompt { font-size: var(--fs-lg); font-weight: 500; color: var(--navy); margin: 0 0 var(--space-4); }
+.quiz-restart { margin-top: var(--space-5); }
+
+/* ---------- 13. Результаты ---------- */
+.results-hero {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-5);
+    align-items: center;
+    padding: var(--space-5);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    margin-bottom: var(--space-5);
+}
+.result-dial {
+    width: 140px;
+    height: 140px;
+    position: relative;
+}
+.result-dial svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.result-dial circle {
+    fill: none;
+    stroke-width: 10;
+    stroke-linecap: round;
+}
+.result-dial .track  { stroke: var(--border); }
+.result-dial .fill   { stroke: url(#dialGradient); transition: stroke-dashoffset var(--dur-slow) var(--ease-out); }
+.result-dial-value {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--space-3);
+    margin: var(--space-4) 0 var(--space-5);
+}
+.result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+    text-align: center;
+    box-shadow: var(--shadow-xs);
+}
+.result-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--navy);
+    font-variant-numeric: tabular-nums;
+}
+.result-label { font-size: var(--fs-xs); color: var(--text-secondary); }
+
+.scale-note { font-size: var(--fs-sm); color: var(--text-secondary); }
+
+.results-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
+
+/* ---------- 14. Справочник формул ---------- */
+.formula-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+}
+.formula-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-xs);
+    transition:
+        transform var(--dur-fast) var(--ease-out),
+        border-color var(--dur-fast) var(--ease-out),
+        box-shadow var(--dur-fast) var(--ease-out);
+}
+.formula-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+    box-shadow: var(--shadow-md);
+}
+.formula-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
+}
+.formula-card-header h3 { margin: 0; font-size: 1rem; }
+.formula-body {
+    padding: var(--space-3) var(--space-2);
+    background: var(--surface-alt);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    overflow-x: auto;
+}
+.formula-when {
+    margin: 0;
+    font-size: var(--fs-sm);
+    color: var(--text-secondary);
+}
+
+/* ---------- 15. Прогресс ---------- */
+.progress-block { margin: var(--space-4) 0; }
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--fs-sm);
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+.progress-track {
+    height: 6px;
+    background: var(--border);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--teal));
+    border-radius: inherit;
+    transition: width var(--dur-slow) var(--ease-out);
+}
+
+/* ---------- 16. Заглушки ---------- */
+.placeholder-fields { display: flex; flex-direction: column; gap: 6px; }
+.placeholder-fields .placeholder {
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--surface-alt);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-xs);
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+/* ---------- 17. Специальные блоки ---------- */
+.callout {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--surface-alt);
+    margin: var(--space-4) 0;
+}
+.callout-title { font-weight: 700; color: var(--navy); margin: 0 0 var(--space-1); }
+.callout p:last-child { margin-bottom: 0; }
+.callout-idea    { border-left: 4px solid var(--accent); background: var(--accent-soft); }
+.callout-remember{ border-left: 4px solid var(--teal);   background: var(--teal-soft); }
+.callout-why     { border-left: 4px solid var(--warning); background: var(--warning-soft); }
+
+/* ---------- 18. Кнопка возврата наверх ---------- */
+.to-top {
+    position: fixed;
+    right: var(--space-4);
+    bottom: var(--space-4);
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #FFFFFF;
+    border: none;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition:
+        opacity var(--dur) var(--ease-out),
+        transform var(--dur) var(--ease-out),
+        visibility var(--dur) var(--ease-out);
+    z-index: 30;
+}
+.to-top.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.to-top:hover { background: var(--accent-strong); }
+.to-top:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+
+/* ---------- 19. Уведомления в углу ---------- */
+.toast {
+    position: fixed;
+    right: var(--space-4);
+    bottom: calc(var(--space-4) + 52px);
+    max-width: 320px;
+    padding: var(--space-3) var(--space-4);
+    background: var(--navy);
+    color: var(--text-inverse);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    font-size: var(--fs-sm);
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition:
+        opacity var(--dur) var(--ease-out),
+        transform var(--dur) var(--ease-out);
+    z-index: 35;
+}
+:root[data-theme="dark"] .toast { background: var(--accent); }
+.toast.is-visible { opacity: 1; transform: translateY(0); }
+
+/* ---------- 20. Адаптив для компонентов ---------- */
+@media (max-width: 980px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-illustration { order: -1; }
+    .hero-illustration img { max-width: 100%; }
+    .info-block { grid-template-columns: 1fr; }
+    .lab-layout { grid-template-columns: 1fr; }
+    .results-hero { grid-template-columns: 1fr; text-align: center; }
+    .result-dial { margin: 0 auto; }
+}
+
+@media (max-width: 560px) {
+    .hero { padding: var(--space-5); }
+    .hero-actions .btn { flex: 1 1 auto; }
+    .route { grid-template-columns: 1fr 1fr; }
+    .practice-input, .quiz-input { flex-direction: column; align-items: flex-start; }
+    .practice-input input, .quiz-input input { width: 100%; }
+    .formula-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn, .card, .feature-card, .route-step, .formula-card,
+    .option, .to-top, .toast, .point-row.is-changed {
+        transition: none !important;
+        animation: none !important;
+        transform: none !important;
+    }
+}

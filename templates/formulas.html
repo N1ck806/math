@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="prose content--wide">
+
+    <h1>Справочник формул</h1>
+    <p class="lead">
+        Краткий список формул метода наименьших квадратов. Каждую формулу
+        можно скопировать — как математическую запись, так и её текстовый
+        эквивалент.
+    </p>
+
+    <div class="formula-grid">
+        {% for formula in formulas %}
+        {% include 'partials/formula_card.html' %}
+        {% endfor %}
+    </div>
+</article>
+{% endblock %}

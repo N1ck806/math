@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img"
+     aria-labelledby="sqTitle sqDesc" preserveAspectRatio="xMidYMid meet">
+    <title id="sqTitle">Почему важны квадраты остатков</title>
+    <desc id="sqDesc">
+        Слева три небольших остатка по единице дают сумму квадратов, равную 3.
+        Справа один большой остаток, равный 3, даёт сумму квадратов, равную 9.
+        Большое отклонение получает больший вес.
+    </desc>
+
+    <defs>
+        <linearGradient id="sqSmall" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3FD1C7"/>
+            <stop offset="100%" stop-color="#19A7A0"/>
+        </linearGradient>
+        <linearGradient id="sqLarge" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#E38A8A"/>
+            <stop offset="100%" stop-color="#C94C4C"/>
+        </linearGradient>
+    </defs>
+
+    <!-- Фон и рамка -->
+    <rect x="0" y="0" width="640" height="360" rx="16"
+          fill="#FFFFFF" stroke="#E1E7F0" stroke-width="1"/>
+
+    <!-- ================== Левая часть: три остатка по 1 ================== -->
+    <g transform="translate(40, 40)">
+        <text x="0" y="0" font-family="Inter, sans-serif"
+              font-size="14" font-weight="600" fill="#202B3C">
+            Три остатка по 1
+        </text>
+        <text x="0" y="20" font-family="Inter, sans-serif"
+              font-size="12" fill="#68758A">
+            остатки: 1, 1, 1
+        </text>
+
+        <!-- Базовая линия -->
+        <line x1="0" y1="200" x2="200" y2="200"
+              stroke="#E1E7F0" stroke-width="1.5"/>
+
+        <!-- Три столбика по 1 -->
+        <rect x="20"  y="170" width="40" height="30" rx="4" fill="url(#sqSmall)"/>
+        <rect x="80"  y="170" width="40" height="30" rx="4" fill="url(#sqSmall)"/>
+        <rect x="140" y="170" width="40" height="30" rx="4" fill="url(#sqSmall)"/>
+
+        <!-- Подписи под столбиками -->
+        <text x="40"  y="220" text-anchor="middle"
+              font-family="Inter, sans-serif" font-size="12" fill="#202B3C">1²</text>
+        <text x="100" y="220" text-anchor="middle"
+              font-family="Inter, sans-serif" font-size="12" fill="#202B3C">1²</text>
+        <text x="160" y="220" text-anchor="middle"
+              font-family="Inter, sans-serif" font-size="12" fill="#202B3C">1²</text>
+
+        <!-- Итог -->
+        <text x="100" y="265" text-anchor="middle"
+              font-family="Inter, sans-serif" font-size="15" font-weight="600"
+              fill="#19A7A0">SSE = 3</text>
+    </g>
+
+    <!-- Разделитель -->
+    <line x1="320" y1="40" x2="320" y2="320"
+          stroke="#E1E7F0" stroke-width="1" stroke-dasharray="4 4"/>
+
+    <!-- ================== Правая часть: один остаток 3 ================== -->
+    <g transform="translate(360, 40)">
+        <text x="0" y="0" font-family="Inter, sans-serif"
+              font-size="14" font-weight="600" fill="#202B3C">
+            Один остаток 3
+        </text>
+        <text x="0" y="20" font-family="Inter, sans-serif"
+              font-size="12" fill="#68758A">
+            остатки: 0, 0, 3
+        </text>
+
+        <!-- Базовая линия -->
+        <line x1="0" y1="200" x2="200" y2="200"
+              stroke="#E1E7F0" stroke-width="1.5"/>
+
+        <!-- Два пустых столбика и один большой -->
+        <rect x="20" y="198" width="40" height="2" rx="1" fill="#E1E7F0"/>
+        <rect x="80" y="198" width="40" height="2" rx="1" fill="#E1E7F0"/>
+        <rect x="140" y="110" width="40" height="90" rx="4" fill="url(#sqLarge)"/>
+
+        <!-- Подписи под столбиками -->
+        <text x="40"  y="220" text-anchor="middle"
+              font-family="Inter, sans-serif" font-size="12" fill="#202B3C">0²</text>
+        <text x="100" y="220" text-anchor="middle"
+              font-family="Inter, sans-serif" font-size="12" fill="#202B3C">0²</text>
+        <text x="160" y="220" text-anchor="middle"
+              font-family="Inter, sans-serif" font-size="12" fill="#C94C4C"
+              font-weight="600">3²</text>
+
+        <!-- Итог -->
+        <text x="100" y="265" text-anchor="middle"
+              font-family="Inter, sans-serif" font-size="15" font-weight="600"
+              fill="#C94C4C">SSE = 9</text>
+    </g>
+
+    <!-- Нижняя подпись -->
+    <text x="320" y="335" text-anchor="middle"
+          font-family="Inter, sans-serif" font-size="12.5" fill="#68758A">
+        Большой остаток вносит больший вклад в сумму квадратов
+    </text>
+</svg>

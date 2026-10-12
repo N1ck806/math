@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- ============ Первый экран ============ -->
+<section class="hero hero-home" aria-labelledby="hero-title">
+    <div class="hero-text">
+        <span class="hero-tag">
+            <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="4" fill="currentColor"/>
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+            </svg>
+            Интерактивный учебный курс
+        </span>
+
+        <h1 id="hero-title">Метод наименьших квадратов</h1>
+
+        <p class="hero-subtitle">
+            Как найти наилучшую приближающую зависимость
+            по набору экспериментальных данных.
+        </p>
+
+        <p class="hero-description">
+            Изучите математическую идею метода, разберитесь в формулах,
+            исследуйте данные на интерактивном графике и проверьте свои знания.
+        </p>
+
+        <div class="hero-actions">
+            <a class="btn btn-primary" href="{{ url_for('theory') }}">
+                Начать изучение
+                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6" fill="none"
+                          stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <a class="btn btn-secondary" href="{{ url_for('lab') }}">
+                Открыть лабораторию
+            </a>
+        </div>
+
+        <ul class="hero-meta" aria-label="Ключевые факты о курсе">
+            <li class="hero-meta-item">6 разделов теории и практики</li>
+            <li class="hero-meta-item">Интерактивная лаборатория</li>
+            <li class="hero-meta-item">Итоговый тест с разбором ошибок</li>
+        </ul>
+    </div>
+
+    <div class="hero-illustration">
+        <img src="{{ url_for('static', filename='svg/approximation.svg') }}"
+             alt="Координатная плоскость: шесть экспериментальных точек, приближающая прямая и вертикальные отрезки остатков"
+             width="520" height="380" loading="eager">
+    </div>
+
+    <span class="bg-grid" aria-hidden="true"></span>
+</section>
+
+<!-- ============ Возможности ============ -->
+<section class="section features" aria-labelledby="features-title">
+    <header class="section-head">
+        <h2 id="features-title" class="section-title">Что вас ждёт</h2>
+        <p class="section-subtitle">
+            Курс построен по принципу: сначала идея, затем формула, затем пример
+            и только потом — самостоятельная задача.
+        </p>
+    </header>
+
+    <div class="feature-grid">
+        <article class="feature-card reveal">
+            <span class="feature-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                    <path d="M4 5h16M4 12h16M4 19h10" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </span>
+            <h3>Понятная теория</h3>
+            <p>Идея метода, аппроксимация, остатки и критерий минимума — без перегрузки.</p>
+        </article>
+
+        <article class="feature-card reveal">
+            <span class="feature-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                    <path d="M4 20l4-8 4 4 4-10 4 6" fill="none"
+                          stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </span>
+            <h3>Примеры с решениями</h3>
+            <p>Полные выкладки с проверкой: средние, отклонения, коэффициенты, SSE.</p>
+        </article>
+
+        <article class="feature-card reveal">
+            <span class="feature-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" fill="none"
+                            stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 3v18M3 12h18" fill="none"
+                          stroke="currentColor" stroke-width="2" opacity="0.5"/>
+                </svg>
+            </span>
+            <h3>Интерактивная практика</h3>
+            <p>Лаборатория с графиком, тест с объяснением ошибок и практические задания.</p>
+        </article>
+    </div>
+</section>
+
+<!-- ============ Учебный маршрут ============ -->
+<section class="section route-section" aria-labelledby="route-title">
+    <header class="section-head">
+        <h2 id="route-title" class="section-title">Учебный маршрут</h2>
+        <p class="section-subtitle">
+            Пять последовательных этапов — от первой идеи до проверки знаний.
+        </p>
+    </header>
+
+    <ol class="route" role="list">
+        <li>
+            <a class="route-step" href="{{ url_for('theory') }}">
+                <span class="route-num">01</span>
+                <span class="route-title">Понять идею</span>
+                <span class="route-hint">Зачем нужна аппроксимация</span>
+            </a>
+        </li>
+        <li>
+            <a class="route-step" href="{{ url_for('model') }}">
+                <span class="route-num">02</span>
+                <span class="route-title">Изучить модель</span>
+                <span class="route-hint">Прямая и остатки</span>
+            </a>
+        </li>
+        <li>
+            <a class="route-step" href="{{ url_for('calculation') }}">
+                <span class="route-num">03</span>
+                <span class="route-title">Разобрать вычисления</span>
+                <span class="route-hint">Формулы и шаги</span>
+            </a>
+        </li>
+        <li>
+            <a class="route-step" href="{{ url_for('lab') }}">
+                <span class="route-num">04</span>
+                <span class="route-title">Исследовать данные</span>
+                <span class="route-hint">Лаборатория</span>
+            </a>
+        </li>
+        <li>
+            <a class="route-step" href="{{ url_for('quiz') }}">
+                <span class="route-num">05</span>
+                <span class="route-title">Проверить знания</span>
+                <span class="route-hint">Тест и результаты</span>
+            </a>
+        </li>
+    </ol>
+</section>
+
+<!-- ============ Для кого / что нужно знать ============ -->
+<section class="section" aria-labelledby="audience-title">
+    <h2 id="audience-title" class="visually-hidden">Для кого этот курс</h2>
+    <div class="info-block">
+        <div>
+            <h3>Для кого</h3>
+            <p>Студенты первого курса, изучающие математическое моделирование
+               и основы анализа данных.</p>
+        </div>
+        <div>
+            <h3>Предварительные знания</h3>
+            <p>Координатная плоскость, линейные функции, основные действия
+               с суммами и степенями. Продвинутая линейная алгебра не требуется.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ Финальный призыв ============ -->
+<section class="section hero-cta" aria-labelledby="cta-title">
+    <h2 id="cta-title">Готовы начать?</h2>
+    <p>Первый раздел займёт около десяти минут и даст базу для всего остального.</p>
+    <div class="hero-actions">
+        <a class="btn btn-primary" href="{{ url_for('theory') }}">Перейти к введению</a>
+        <a class="btn btn-secondary" href="{{ url_for('formulas') }}">Справочник формул</a>
+    </div>
+</section>
+
+{% endblock %}

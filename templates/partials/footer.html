@@ -1,0 +1,38 @@
+<footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+
+        <div class="footer-col">
+            <h4>О курсе</h4>
+            <p>
+                «Метод наименьших квадратов» — интерактивный учебный курс
+                для студентов первого курса: от идеи аппроксимации до
+                самостоятельного исследования данных.
+            </p>
+        </div>
+
+        <div class="footer-col">
+            <h4>Разделы</h4>
+            <ul>
+                <li><a href="{{ url_for('theory') }}">Введение в МНК</a></li>
+                <li><a href="{{ url_for('model') }}">Математическая модель</a></li>
+                <li><a href="{{ url_for('examples') }}">Разобранные примеры</a></li>
+                <li><a href="{{ url_for('formulas') }}">Справочник формул</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Практика</h4>
+            <ul>
+                <li><a href="{{ url_for('lab') }}">Интерактивная лаборатория</a></li>
+                <li><a href="{{ url_for('practice') }}">Практические задания</a></li>
+                <li><a href="{{ url_for('quiz') }}">Итоговый тест</a></li>
+                <li><a href="{{ url_for('about') }}">О проекте</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer-meta">
+        <span>Учебный проект · {{ current_year }}</span>
+    </div>
+</footer>

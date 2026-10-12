@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#14243A">
+    <meta name="description" content="Интерактивный учебный курс по методу наименьших квадратов: теория, примеры, лаборатория и тест.">
+    <title>{{ title }} — Метод наименьших квадратов</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/katex/katex.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('theme');
+                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                var theme = saved || (prefersDark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch (e) {}
+        })();
+    </script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Перейти к содержимому</a>
+
+<header class="topbar" role="banner">
+    <button class="menu-toggle" type="button"
+            aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar"
+            data-menu-toggle>
+        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+            <rect x="2" y="5" width="18" height="2" rx="1" fill="currentColor"/>
+            <rect x="2" y="10" width="18" height="2" rx="1" fill="currentColor"/>
+            <rect x="2" y="15" width="18" height="2" rx="1" fill="currentColor"/>
+        </svg>
+    </button>
+
+    <a class="brand" href="{{ url_for('index') }}" aria-label="На главную">
+        <span class="brand-mark">МНК</span>
+        <span class="brand-text">Математическое моделирование</span>
+    </a>
+
+    <div class="topbar-tools">
+        <div class="topbar-progress" role="progressbar"
+             aria-valuemin="0" aria-valuemax="100"
+             aria-valuenow="{{ progress_percent }}"
+             aria-label="Учебный прогресс: {{ progress_percent }}%">
+            <div class="topbar-progress-fill" style="width: {{ progress_percent }}%;"></div>
+        </div>
+
+        <button class="theme-toggle" type="button"
+                aria-label="Переключить тему" aria-pressed="false"
+                data-theme-toggle>
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"
+                      fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </div>
+</header>
+
+<div class="layout">
+    {% include 'partials/nav.html' %}
+
+    <main id="main-content" class="content" tabindex="-1">
+        {% include 'partials/breadcrumbs.html' %}
+
+        {% block content %}{% endblock %}
+    </main>
+</div>
+
+{% include 'partials/footer.html' %}
+
+<button class="to-top" type="button" aria-label="Наверх" data-to-top hidden>
+    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 14l6-6 6 6" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+</button>
+
+<div class="toast" role="status" aria-live="polite" data-toast hidden></div>
+
+<script src="{{ url_for('static', filename='vendor/katex/katex.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" role="img"
+     aria-labelledby="resTitle resDesc" preserveAspectRatio="xMidYMid meet">
+    <title id="resTitle">Геометрический смысл остатков</title>
+    <desc id="resDesc">
+        Экспериментальные точки и прямая модели. Для каждой точки проведён
+        вертикальный отрезок к прямой — остаток e_i = y_i − ŷ_i.
+    </desc>
+
+    <defs>
+        <linearGradient id="resLine" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#4776E6"/>
+            <stop offset="100%" stop-color="#19A7A0"/>
+        </linearGradient>
+        <radialGradient id="resPoint" cx="0.35" cy="0.35" r="0.7">
+            <stop offset="0%" stop-color="#3FD1C7"/>
+            <stop offset="100%" stop-color="#19A7A0"/>
+        </radialGradient>
+        <pattern id="resGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none"
+                  stroke="#E1E7F0" stroke-width="1"/>
+        </pattern>
+    </defs>
+
+    <!-- Фон и рамка -->
+    <rect x="0" y="0" width="640" height="440" rx="16"
+          fill="#FFFFFF" stroke="#E1E7F0" stroke-width="1"/>
+
+    <!-- Область графика -->
+    <g transform="translate(64, 40)">
+        <!-- Сетка -->
+        <rect x="0" y="0" width="520" height="340"
+              fill="url(#resGrid)" opacity="0.6"/>
+        <rect x="0" y="0" width="520" height="340"
+              fill="none" stroke="#E1E7F0" stroke-width="1"/>
+
+        <!-- Оси -->
+        <line x1="0" y1="340" x2="520" y2="340"
+              stroke="#202B3C" stroke-width="1.75" stroke-linecap="round"/>
+        <line x1="0" y1="340" x2="0" y2="0"
+              stroke="#202B3C" stroke-width="1.75" stroke-linecap="round"/>
+        <polygon points="520,340 512,336 512,344" fill="#202B3C"/>
+        <polygon points="0,0 -4,8 4,8" fill="#202B3C"/>
+
+        <text x="524" y="360" font-family="Inter, sans-serif"
+              font-size="14" font-style="italic" fill="#202B3C">x</text>
+        <text x="-22" y="-8" font-family="Inter, sans-serif"
+              font-size="14" font-style="italic" fill="#202B3C">y</text>
+
+        <!-- Прямая модели -->
+        <line x1="40" y1="300" x2="500" y2="60"
+              stroke="url(#resLine)" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- Остатки: от каждой точки — вниз/вверх до прямой -->
+        <g stroke="#C94C4C" stroke-width="1.8" stroke-dasharray="5 4"
+           stroke-linecap="round">
+            <line x1="90"  y1="285" x2="90"  y2="290"/>
+            <line x1="170" y1="233" x2="170" y2="225"/>
+            <line x1="250" y1="181" x2="250" y2="192"/>
+            <line x1="330" y1="129" x2="330" y2="139"/>
+            <line x1="410" y1="77"  x2="410" y2="113"/>
+        </g>
+
+        <!-- Точки -->
+        <g>
+            <circle cx="90"  cy="290" r="6.5" fill="url(#resPoint)" stroke="#FFFFFF" stroke-width="1.5"/>
+            <circle cx="170" cy="225" r="6.5" fill="url(#resPoint)" stroke="#FFFFFF" stroke-width="1.5"/>
+            <circle cx="250" cy="192" r="6.5" fill="url(#resPoint)" stroke="#FFFFFF" stroke-width="1.5"/>
+            <circle cx="330" cy="139" r="6.5" fill="url(#resPoint)" stroke="#FFFFFF" stroke-width="1.5"/>
+            <circle cx="410" cy="113" r="6.5" fill="url(#resPoint)" stroke="#FFFFFF" stroke-width="1.5"/>
+        </g>
+
+        <!-- Подпись одного остатка -->
+        <text x="418" y="100" font-family="Inter, sans-serif"
+              font-size="13" font-style="italic" fill="#C94C4C">eᵢ</text>
+        <text x="418" y="118" font-family="Inter, sans-serif"
+              font-size="11" fill="#68758A">yᵢ − ŷᵢ</text>
+    </g>
+
+    <!-- Подпись снизу -->
+    <text x="320" y="424" text-anchor="middle"
+          font-family="Inter, sans-serif" font-size="12.5" fill="#68758A">
+        Остаток — вертикальное отклонение наблюдения от значения, предсказанного моделью
+    </text>
+</svg>

@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" role="img"
+     aria-labelledby="scTitle scDesc" preserveAspectRatio="xMidYMid meet">
+    <title id="scTitle">Изменение наклона и свободного члена</title>
+    <desc id="scDesc">
+        На одном наборе экспериментальных точек показаны три прямые:
+        прямая МНК (найдена по методу наименьших квадратов) и две
+        альтернативные прямые с другим наклоном и сдвигом. Величина SSE
+        для каждой прямой разная.
+    </desc>
+
+    <defs>
+        <linearGradient id="scLine" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#4776E6"/>
+            <stop offset="100%" stop-color="#19A7A0"/>
+        </linearGradient>
+        <radialGradient id="scPoint" cx="0.35" cy="0.35" r="0.7">
+            <stop offset="0%" stop-color="#3FD1C7"/>
+            <stop offset="100%" stop-color="#19A7A0"/>
+        </radialGradient>
+        <pattern id="scGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none"
+                  stroke="#E1E7F0" stroke-width="1"/>
+        </pattern>
+    </defs>
+
+    <!-- Фон и рамка -->
+    <rect x="0" y="0" width="640" height="440" rx="16"
+          fill="#FFFFFF" stroke="#E1E7F0" stroke-width="1"/>
+
+    <!-- Область графика -->
+    <g transform="translate(64, 40)">
+        <rect x="0" y="0" width="520" height="340"
+              fill="url(#scGrid)" opacity="0.6"/>
+        <rect x="0" y="0" width="520" height="340"
+              fill="none" stroke="#E1E7F0" stroke-width="1"/>
+
+        <!-- Оси -->
+        <line x1="0" y1="340" x2="520" y2="340"
+              stroke="#202B3C" stroke-width="1.75" stroke-linecap="round"/>
+        <line x1="0" y1="340" x2="0" y2="0"
+              stroke="#202B3C" stroke-width="1.75" stroke-linecap="round"/>
+        <polygon points="520,340 512,336 512,344" fill="#202B3C"/>
+        <polygon points="0,0 -4,8 4,8" fill="#202B3C"/>
+
+        <text x="524" y="360" font-family="Inter, sans-serif"
+              font-size="14" font-style="italic" fill="#202B3C">x</text>
+        <text x="-22" y="-8" font-family="Inter, sans-serif"
+              font-size="14" font-style="italic" fill="#202B3C">y</text>
+
+        <!-- Альтернатива B: круче наклон -->
+        <line x1="40" y1="300" x2="500" y2="40"
+              stroke="#19A7A0" stroke-width="2.2"
+              stroke-dasharray="7 5" stroke-linecap="round" opacity="0.9"/>
+
+        <!-- Альтернатива C: сдвиг вниз -->
+        <line x1="40" y1="340" x2="500" y2="100"
+              stroke="#C94C4C" stroke-width="2.2"
+              stroke-dasharray="7 5" stroke-linecap="round" opacity="0.9"/>
+
+        <!-- Прямая МНК -->
+        <line x1="40" y1="316" x2="500" y2="86"
+              stroke="url(#scLine)" stroke-width="3.5" stroke-linecap="round"/>
+
+        <!-- Точки -->
+        <g>
+            <circle cx="90"  cy="290" r="6.5" fill="url(#scPoint)" stroke="#FFFFFF" stroke-width="1.5"/>
+            <circle cx="170" cy="235" r="6.5" fill="url(#scPoint)" stroke="#FFFFFF" stroke-width="1.5"/>
+            <circle cx="250" cy="215" r="6.5" fill="url(#scPoint)" stroke="#FFFFFF" stroke-width="1.5"/>
+            <circle cx="330" cy="155" r="6.5" fill="url(#scPoint)" stroke="#FFFFFF" stroke-width="1.5"/>
+            <circle cx="410" cy="140" r="6.5" fill="url(#scPoint)" stroke="#FFFFFF" stroke-width="1.5"/>
+            <circle cx="480" cy="90"  r="6.5" fill="url(#scPoint)" stroke="#FFFFFF" stroke-width="1.5"/>
+        </g>
+    </g>
+
+    <!-- Легенда -->
+    <g transform="translate(64, 400)">
+        <rect x="0" y="-18" width="520" height="34" rx="8"
+              fill="#F5F7FB" stroke="#E1E7F0"/>
+
+        <line x1="14" y1="-2" x2="34" y2="-2"
+              stroke="#4776E6" stroke-width="3.5" stroke-linecap="round"/>
+        <text x="42" y="2" font-family="Inter, sans-serif"
+              font-size="12" fill="#202B3C">прямая МНК</text>
+
+        <line x1="164" y1="-2" x2="184" y2="-2"
+              stroke="#19A7A0" stroke-width="2.2"
+              stroke-dasharray="7 5" stroke-linecap="round"/>
+        <text x="192" y="2" font-family="Inter, sans-serif"
+              font-size="12" fill="#202B3C">круче наклон</text>
+
+        <line x1="316" y1="-2" x2="336" y2="-2"
+              stroke="#C94C4C" stroke-width="2.2"
+              stroke-dasharray="7 5" stroke-linecap="round"/>
+        <text x="344" y="2" font-family="Inter, sans-serif"
+              font-size="12" fill="#202B3C">сдвиг вниз</text>
+    </g>
+
+    <!-- Нижняя подпись -->
+    <text x="320" y="428" text-anchor="middle"
+          font-family="Inter, sans-serif" font-size="12.5" fill="#68758A">
+        Изменение коэффициентов a и b меняет положение прямой, а значит и SSE
+    </text>
+</svg>

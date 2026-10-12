@@ -1,0 +1,55 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="PyQt6" />
+          <option value="PyQt6-Qt6" />
+          <option value="PyQt6-sip" />
+          <option value="pywin32" />
+          <option value="wmi" />
+          <option value="psutil" />
+          <option value="pygetwindow" />
+          <option value="keyboard" />
+          <option value="mouse" />
+          <option value="pynput" />
+          <option value="Pillow" />
+          <option value="opencv-python" />
+          <option value="imageio" />
+          <option value="qrcode" />
+          <option value="pygame" />
+          <option value="pyglet" />
+          <option value="pydub" />
+          <option value="simpleaudio" />
+          <option value="pygame-mixer" />
+          <option value="requests" />
+          <option value="speedtest-cli" />
+          <option value="wifi" />
+          <option value="dnspython" />
+          <option value="py7zr" />
+          <option value="zipfile2" />
+          <option value="rarfile" />
+          <option value="chardet" />
+          <option value="difflib2" />
+          <option value="winreg" />
+          <option value="ctypes" />
+          <option value="qasync" />
+          <option value="asyncio" />
+          <option value="python-dotenv" />
+          <option value="colorama" />
+          <option value="tqdm" />
+          <option value="pyperclip" />
+          <option value="pyautogui" />
+          <option value="screeninfo" />
+          <option value="pystray" />
+          <option value="Flask" />
+          <option value="Flask-SQLAlchemy" />
+          <option value="Flask-Login" />
+          <option value="python-telegram-bot" />
+          <option value="Werkzeug" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

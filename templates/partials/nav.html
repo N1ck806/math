@@ -1,0 +1,98 @@
+<aside class="sidebar" id="sidebar" data-sidebar aria-label="Боковая навигация">
+    <nav aria-label="Основная навигация">
+
+        <p class="sidebar-title">Учебный курс</p>
+        <ul class="nav-list">
+            <li>
+                <a href="{{ url_for('index') }}"
+                   class="nav-link {% if current_endpoint == 'index' %}is-active{% endif %}"
+                   {% if current_endpoint == 'index' %}aria-current="page"{% endif %}>
+                    Главная
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('theory') }}"
+                   class="nav-link {% if current_endpoint == 'theory' %}is-active{% endif %}"
+                   {% if current_endpoint == 'theory' %}aria-current="page"{% endif %}>
+                    Введение в МНК
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('model') }}"
+                   class="nav-link {% if current_endpoint == 'model' %}is-active{% endif %}"
+                   {% if current_endpoint == 'model' %}aria-current="page"{% endif %}>
+                    Математическая модель
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('calculation') }}"
+                   class="nav-link {% if current_endpoint == 'calculation' %}is-active{% endif %}"
+                   {% if current_endpoint == 'calculation' %}aria-current="page"{% endif %}>
+                    Методика вычислений
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('examples') }}"
+                   class="nav-link {% if current_endpoint == 'examples' %}is-active{% endif %}"
+                   {% if current_endpoint == 'examples' %}aria-current="page"{% endif %}>
+                    Разобранные примеры
+                </a>
+            </li>
+        </ul>
+
+        <div class="nav-group">
+            <p class="sidebar-title">Практика и проверка</p>
+            <ul class="nav-list">
+                <li>
+                    <a href="{{ url_for('lab') }}"
+                       class="nav-link {% if current_endpoint == 'lab' %}is-active{% endif %}"
+                       {% if current_endpoint == 'lab' %}aria-current="page"{% endif %}>
+                        Интерактивная лаборатория
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('practice') }}"
+                       class="nav-link {% if current_endpoint == 'practice' %}is-active{% endif %}"
+                       {% if current_endpoint == 'practice' %}aria-current="page"{% endif %}>
+                        Практические задания
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('quiz') }}"
+                       class="nav-link {% if current_endpoint == 'quiz' %}is-active{% endif %}"
+                       {% if current_endpoint == 'quiz' %}aria-current="page"{% endif %}>
+                        Итоговый тест
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('results') }}"
+                       class="nav-link {% if current_endpoint == 'results' %}is-active{% endif %}"
+                       {% if current_endpoint == 'results' %}aria-current="page"{% endif %}>
+                        Результаты
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="nav-group">
+            <p class="sidebar-title">Материалы</p>
+            <ul class="nav-list">
+                <li>
+                    <a href="{{ url_for('formulas') }}"
+                       class="nav-link {% if current_endpoint == 'formulas' %}is-active{% endif %}"
+                       {% if current_endpoint == 'formulas' %}aria-current="page"{% endif %}>
+                        Справочник формул
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('about') }}"
+                       class="nav-link {% if current_endpoint == 'about' %}is-active{% endif %}"
+                       {% if current_endpoint == 'about' %}aria-current="page"{% endif %}>
+                        О проекте
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+</aside>

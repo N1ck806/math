@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 180" role="img"
+     aria-labelledby="routeTitle routeDesc" preserveAspectRatio="xMidYMid meet">
+    <title id="routeTitle">Учебный маршрут курса</title>
+    <desc id="routeDesc">
+        Шесть последовательных этапов: идея метода, математическая модель,
+        вычисления, примеры, практика и итоговый тест.
+    </desc>
+
+    <defs>
+        <linearGradient id="routeLine" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"  stop-color="#4776E6"/>
+            <stop offset="60%" stop-color="#19A7A0"/>
+            <stop offset="100%" stop-color="#23865B"/>
+        </linearGradient>
+        <linearGradient id="routeNodeStart" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6E93F0"/>
+            <stop offset="100%" stop-color="#4776E6"/>
+        </linearGradient>
+        <linearGradient id="routeNodeMid" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3FD1C7"/>
+            <stop offset="100%" stop-color="#19A7A0"/>
+        </linearGradient>
+        <linearGradient id="routeNodeEnd" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4EC08B"/>
+            <stop offset="100%" stop-color="#23865B"/>
+        </linearGradient>
+
+        <style>
+            @media (prefers-reduced-motion: no-preference) {
+                .route-line {
+                    stroke-dasharray: 800;
+                    stroke-dashoffset: 800;
+                    animation: route-line-draw 1.2s ease-out 0.1s forwards;
+                }
+                .route-node {
+                    opacity: 0;
+                    transform: scale(0.6);
+                    transform-origin: center;
+                    transform-box: fill-box;
+                    animation: route-node-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+                }
+                .route-node-1 { animation-delay: 0.35s; }
+                .route-node-2 { animation-delay: 0.55s; }
+                .route-node-3 { animation-delay: 0.75s; }
+                .route-node-4 { animation-delay: 0.95s; }
+                .route-node-5 { animation-delay: 1.15s; }
+                .route-node-6 { animation-delay: 1.35s; }
+
+                .route-label {
+                    opacity: 0;
+                    transform: translateY(6px);
+                    animation: route-label-fade 0.5s ease-out forwards;
+                }
+                .route-label-1 { animation-delay: 0.45s; }
+                .route-label-2 { animation-delay: 0.65s; }
+                .route-label-3 { animation-delay: 0.85s; }
+                .route-label-4 { animation-delay: 1.05s; }
+                .route-label-5 { animation-delay: 1.25s; }
+                .route-label-6 { animation-delay: 1.45s; }
+            }
+
+            @keyframes route-line-draw {
+                to { stroke-dashoffset: 0; }
+            }
+            @keyframes route-node-pop {
+                to { opacity: 1; transform: scale(1); }
+            }
+            @keyframes route-label-fade {
+                to { opacity: 1; transform: translateY(0); }
+            }
+        </style>
+    </defs>
+
+    <!-- Фон и рамка -->
+    <rect x="0" y="0" width="900" height="180" rx="16"
+          fill="#FFFFFF" stroke="#E1E7F0" stroke-width="1"/>
+
+    <!-- Базовая линия маршрута -->
+    <line x1="80" y1="90" x2="820" y2="90"
+          stroke="#E1E7F0" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Анимированная цветная линия поверх серой -->
+    <line class="route-line" x1="80" y1="90" x2="820" y2="90"
+          stroke="url(#routeLine)" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- ================== Узлы ================== -->
+
+    <!-- 01. Идея -->
+    <g class="route-node route-node-1">
+        <circle cx="80" cy="90" r="18" fill="url(#routeNodeStart)" stroke="#FFFFFF" stroke-width="3"/>
+        <text x="80" y="95" text-anchor="middle" font-family="Inter, sans-serif"
+              font-size="13" font-weight="700" fill="#FFFFFF">1</text>
+    </g>
+    <text class="route-label route-label-1" x="80" y="140"
+          text-anchor="middle" font-family="Inter, sans-serif"
+          font-size="13" font-weight="600" fill="#202B3C">Идея</text>
+    <text class="route-label route-label-1" x="80" y="158"
+          text-anchor="middle" font-family="Inter, sans-serif"
+          font-size="11" fill="#68758A">зачем нужен МНК</text>
+
+    <!-- 02. Модель -->
+    <g class="route-node route-node-2">
+        <circle cx="228" cy="90" r="18" fill="url(#routeNodeStart)" stroke="#FFFFFF" stroke-width="3"/>
+        <text x="228" y="95" text-anchor="middle" font-family="Inter, sans-serif"
+              font-size="13" font-weight="700" fill="#FFFFFF">2</text>
+    </g>
+    <text class="route-label route-label-2" x="228" y="140"
+          text-anchor="middle" font-family="Inter, sans-serif"
+          font-size="13" font-weight="600" fill="#202B3C">Модель</text>
+    <text class="route-label route-label-2" x="228" y="158"
+          text-anchor="middle" font-family="Inter, sans-serif"
+          font-size="11" fill="#68758A">формулы</text>
+
+    <!-- 03. Вычисления -->
+    <g class="route-node route-node-3">
+        <circle cx="376" cy="90" r="18" fill="url(#routeNodeMid)" stroke="#FFFFFF" stroke-width="3"/>
+        <text x="376" y="95" text-anchor="middle" font-family="Inter, sans-serif"
+              font-size="13" font-weight="700" fill="#FFFFFF">3</text>
+    </g>
+    <text class="route-label route-label-3" x="376" y="140"
+          text-anchor="middle" font-family="Inter, sans-serif"
+          font-size="13" font-weight="600" fill="#202B3C">Вычисления</text>
+    <text class="route-label route-label-3" x="376" y="158"
+          text-anchor="middle" font-family="Inter, sans-serif"
+          font-size="11" fill="#68758A">алгоритм</text>
+
+    <!-- 04. Примеры -->
+    <g class="route-node route-node-4">
+        <circle cx="524" cy="90" r="18" fill="url(#routeNodeMid)" stroke="#FFFFFF" stroke-width="3"/>
+        <text x="524" y="95" text-anchor="middle" font-family="Inter, sans-serif"
+              font-size="13" font-weight="700" fill="#FFFFFF">4</text>
+    </g>
+    <text class="route-label route-label-4" x="524" y="140"
+          text-anchor="middle" font-family="Inter, sans-serif"
+          font-size="13" font-weight="600" fill="#202B3C">Примеры</text>
+    <text class="route-label route-label-4" x="524" y="158"
+          text-anchor="middle" font-family="Inter, sans-serif"
+          font-size="11" fill="#68758A">полные решения</text>
+
+    <!-- 05. Практика -->
+    <g class="route-node route-node-5">
+        <circle cx="672" cy="90" r="18" fill="url(#routeNodeMid)" stroke="#FFFFFF" stroke-width="3"/>
+        <text x="672" y="95" text-anchor="middle" font-family="Inter, sans-serif"
+              font-size="13" font-weight="700" fill="#FFFFFF">5</text>
+    </g>
+    <text class="route-label route-label-5" x="672" y="140"
+          text-anchor="middle" font-family="Inter, sans-serif"
+          font-size="13" font-weight="600" fill="#202B3C">Практика</text>
+    <text class="route-label route-label-5" x="672" y="158"
+          text-anchor="middle" font-family="Inter, sans-serif"
+          font-size="11" fill="#68758A">лаборатория</text>
+
+    <!-- 06. Тест -->
+    <g class="route-node route-node-6">
+        <circle cx="820" cy="90" r="18" fill="url(#routeNodeEnd)" stroke="#FFFFFF" stroke-width="3"/>
+        <text x="820" y="95" text-anchor="middle" font-family="Inter, sans-serif"
+              font-size="13" font-weight="700" fill="#FFFFFF">6</text>
+    </g>
+    <text class="route-label route-label-6" x="820" y="140"
+          text-anchor="middle" font-family="Inter, sans-serif"
+          font-size="13" font-weight="600" fill="#202B3C">Тест</text>
+    <text class="route-label route-label-6" x="820" y="158"
+          text-anchor="middle" font-family="Inter, sans-serif"
+          font-size="11" fill="#68758A">проверка знаний</text>
+</svg>

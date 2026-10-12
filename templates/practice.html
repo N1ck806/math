@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="prose">
+    <h1>Практические задания</h1>
+    <p>Задания возрастающей сложности. Проверка — на сервере.</p>
+
+    <div class="practice-list" data-practice-root data-csrf="{{ csrf_token }}">
+        {% for task in tasks %}
+        <section class="practice-card" data-task-id="{{ task.id }}" data-task-type="{{ task.type }}">
+            <h2>{{ task.title }}</h2>
+            <p>{{ task.prompt }}</p>
+
+            {% if task.type == 'single' %}
+            <div class="practice-options">
+                {% for opt in task.options %}
+                <label class="option">
+                    <input type="radio" name="answer-{{ task.id }}" value="{{ opt.key }}">
+                    <span><strong>{{ opt.key }}.</strong> {{ opt.text }}</span>
+                </label>
+                {% endfor %}
+            </div>
+            {% else %}
+            <label class="practice-input">
+                Ответ: <input type="text" name="answer-{{ task.id }}" inputmode="decimal">
+            </label>
+            {% endif %}
+
+            <div class="practice-actions">
+                <button type="button" class="btn btn-primary" data-check>Проверить</button>
+                <button type="button" class="btn btn-secondary" data-retry hidden>Попробовать ещё раз</button>
+            </div>
+
+            <div class="practice-feedback" role="status" aria-live="polite"></div>
+        </section>
+        {% endfor %}
+    </div>
+</article>
+
+{% set learned_items = [
+    'Проверка заданий выполняется на сервере.',
+    'После ошибки показывается разбор, но не готовый ответ без попытки.',
+    'Правильный ответ даёт краткое подтверждение и переход к следующему заданию.'
+] %}
+{% set next_url = url_for('quiz') %}
+{% set next_label = 'Перейти к итоговому тесту' %}
+{% include 'partials/whats_learned.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/practice.js') }}"></script>
+{% endblock %}

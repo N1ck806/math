@@ -1,0 +1,32 @@
+<nav class="breadcrumbs" aria-label="Хлебные крошки">
+    <ol>
+        <li>
+            <a href="{{ url_for('index') }}">Главная</a>
+        </li>
+        {% if current_endpoint and current_endpoint != 'index' %}
+            {% set crumb_map = {
+                'theory':      [('Теория', none)],
+                'model':       [('Теория', 'theory'), ('Математическая модель', none)],
+                'calculation': [('Теория', 'theory'), ('Методика вычислений', none)],
+                'examples':    [('Теория', 'theory'), ('Разобранные примеры', none)],
+                'lab':         [('Практика', none), ('Лаборатория', none)],
+                'practice':    [('Практика', none), ('Практические задания', none)],
+                'quiz':        [('Практика', none), ('Итоговый тест', none)],
+                'results':     [('Практика', none), ('Итоговый тест', 'quiz'), ('Результаты', none)],
+                'formulas':    [('Материалы', none), ('Справочник формул', none)],
+                'about':       [('Материалы', none), ('О проекте', none)],
+            } %}
+            {% set trail = crumb_map.get(current_endpoint, [(title, none)]) %}
+            {% for label, endpoint in trail %}
+                <li>
+                    <span class="breadcrumbs-sep" aria-hidden="true">›</span>
+                    {% if endpoint %}
+                        <a href="{{ url_for(endpoint) }}">{{ label }}</a>
+                    {% else %}
+                        <span class="breadcrumbs-current" aria-current="page">{{ label }}</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        {% endif %}
+    </ol>
+</nav>

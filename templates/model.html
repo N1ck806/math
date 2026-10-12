@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="prose">
+
+    <h1>Математическая модель</h1>
+
+    <p class="lead">
+        Здесь мы переходим от идеи к формулам. Сначала — что именно мы ищем,
+        затем — как найти параметры.
+    </p>
+
+    <!-- ================== 1. Модель ================== -->
+    <section aria-labelledby="model-notation">
+        <h2 id="model-notation">1. Обозначения и модель</h2>
+
+        <p>Пусть есть набор пар наблюдений:</p>
+        <div class="formula" data-latex="(x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)"></div>
+
+        <p>Мы хотим найти прямую:</p>
+        <div class="formula" data-latex="\hat{y} = a x + b"></div>
+
+        <ul>
+            <li><em>a</em> — наклон прямой;</li>
+            <li><em>b</em> — свободный член (значение модели при <em>x</em> = 0);</li>
+            <li><em>x<sub>i</sub></em> — входное значение;</li>
+            <li><em>y<sub>i</sub></em> — наблюдаемое значение;</li>
+            <li><em>ŷ<sub>i</sub></em> — значение, предсказанное моделью.</li>
+        </ul>
+
+        <aside class="callout callout-remember">
+            <div>
+                <p class="callout-title">Единые обозначения</p>
+                <p>Во всём проекте <em>a</em> — наклон, <em>b</em> — свободный член.
+                   Знак «крышка» (ŷ) означает предсказанное значение, а не измерение.</p>
+            </div>
+        </aside>
+    </section>
+
+    <!-- ================== 2. Формулы ================== -->
+    <section aria-labelledby="model-formulas">
+        <h2 id="model-formulas">2. Формулы МНК для прямой с константой</h2>
+
+        <p>Наклон прямой:</p>
+        <div class="formula" data-latex="a = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^2}"></div>
+
+        <p>Свободный член:</p>
+        <div class="formula" data-latex="b = \bar{y} - a\bar{x}"></div>
+
+        <p>где средние значения:</p>
+        <div class="formula" data-latex="\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i, \qquad \bar{y} = \frac{1}{n}\sum_{i=1}^{n} y_i"></div>
+
+        <p>
+            <em>x̄</em> и <em>ȳ</em> — средние значения наблюдений. Формула для
+            <em>a</em> записана через центрированные данные — это численно устойчиво
+            и напрямую отражает идею МНК.
+        </p>
+    </section>
+
+    <!-- ================== 3. Нормальные уравнения ================== -->
+    <section aria-labelledby="model-normal">
+        <h2 id="model-normal">3. Система нормальных уравнений</h2>
+
+        <div class="formula" data-latex="\begin{cases} a\sum x_i^2 + b\sum x_i = \sum x_i y_i \\ a\sum x_i + b n = \sum y_i \end{cases}"></div>
+
+        <p>
+            Эта система получается приравниванием частных производных функции
+            <em>S(a, b)</em> по <em>a</em> и по <em>b</em> к нулю. Она эквивалентна
+            формулам наклона и свободного члена выше, но иногда удобнее для
+            ручных вычислений на небольших наборах данных.
+        </p>
+
+        <aside class="callout callout-idea">
+            <div>
+                <p class="callout-title">Зачем два вида формул</p>
+                <p>Формулы через центрированные данные удобны для вычислений
+                   на компьютере, система нормальных уравнений — для расчётов
+                   вручную и для понимания природы минимума.</p>
+            </div>
+        </aside>
+    </section>
+
+    <!-- ================== 4. Иллюстрация ================== -->
+    <section aria-labelledby="model-figure">
+        <h2 id="model-figure">4. Как это выглядит геометрически</h2>
+
+        <figure class="figure">
+            <img src="{{ url_for('static', filename='svg/residuals.svg') }}"
+                 alt="Экспериментальные точки и прямая модели; для каждой точки показан вертикальный отрезок остатка"
+                 width="640" height="420" loading="lazy">
+            <figcaption>
+                Каждой точке соответствует вертикальный отрезок — остаток,
+                равный <em>e<sub>i</sub></em> = <em>y<sub>i</sub></em> − <em>ŷ<sub>i</sub></em>.
+            </figcaption>
+        </figure>
+    </section>
+</article>
+
+{% set learned_items = [
+    'Модель прямой: ŷ = a·x + b, где a — наклон, b — свободный член.',
+    'Наклон вычисляется через центрированные данные.',
+    'Свободный член находится как b = ȳ − a·x̄.',
+    'Система нормальных уравнений эквивалентна формулам наклона и сдвига.'
+] %}
+{% set next_url = url_for('calculation') %}
+{% set next_label = 'Перейти к методике вычислений' %}
+{% set mini_task = 'Для точек (1, 1), (2, 2), (3, 4) вычислите x̄ и ȳ, затем числитель и знаменатель формулы наклона.' %}
+{% include 'partials/whats_learned.html' %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="prose">
+    <div style="text-align: center; padding: 24px 0;">
+        <p style="font-size: 3rem; font-weight: 700; color: var(--accent); margin: 0 0 8px; line-height: 1;">
+            404
+        </p>
+        <h1 style="margin-top: 0;">{{ title }}</h1>
+        <p class="lead" style="max-width: 46ch; margin-left: auto; margin-right: auto;">
+            {{ message or 'Запрошенная страница не найдена. Возможно, адрес введён
+            с опечаткой или страница была перемещена.' }}
+        </p>
+        <div class="results-actions" style="justify-content: center;">
+            <a class="btn btn-primary" href="{{ url_for('index') }}">
+                Вернуться на главную
+            </a>
+            <a class="btn btn-secondary" href="{{ url_for('theory') }}">
+                К введению в МНК
+            </a>
+        </div>
+    </div>
+</article>
+{% endblock %}

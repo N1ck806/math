@@ -1,0 +1,304 @@
+/* ============================================================
+   responsive.css — адаптивность и мобильная навигация
+   Контрольные ширины: 1440 / 1024 / 980 / 768 / 560 / 390 / 320
+   ============================================================ */
+
+/* ---------- 1. Большие мониторы (≥1440) ---------- */
+@media (min-width: 1440px) {
+    :root { --content-max: 1320px; }
+    .layout { gap: 48px; }
+    .prose { padding: 48px 56px; }
+}
+
+/* ---------- 2. Ноутбуки и планшеты-горизонтально (≤1024) ---------- */
+@media (max-width: 1024px) {
+    :root {
+        --sidebar-w: 236px;
+        --space-7: 40px;
+        --space-8: 56px;
+    }
+    .layout { gap: 24px; }
+    .topbar-progress { flex-basis: 180px; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- 3. Переход к одноколоночному макету (≤980) ---------- */
+@media (max-width: 980px) {
+    .layout {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+
+    /* Сайдбар превращается в выдвижное меню */
+    .sidebar {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 45;
+        max-height: none;
+        height: auto;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        padding: var(--space-4);
+        overflow-y: auto;
+        transform: translateY(-8px);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            opacity var(--dur) var(--ease-out),
+            transform var(--dur) var(--ease-out),
+            visibility var(--dur) var(--ease-out);
+        box-shadow: var(--shadow-lg);
+        background: var(--surface);
+    }
+    .sidebar.is-open {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .menu-toggle { display: inline-flex; }
+
+    /* Двухколоночные блоки становятся одноколоночными */
+    .hero { grid-template-columns: 1fr; padding: clamp(24px, 5vw, 40px); }
+    .feature-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .info-block { grid-template-columns: 1fr; }
+    .lab-layout { grid-template-columns: 1fr; }
+    .formula-grid { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+
+    /* Обложка: график может уходить наверх */
+    .hero-illustration { order: -1; }
+
+    /* Прогресс в шапке скрывается, остаётся только на страницах */
+    .topbar-progress { display: none; }
+}
+
+/* ---------- 4. Планшеты (≤768) ---------- */
+@media (max-width: 768px) {
+    :root {
+        --fs-base: 16px;
+        --space-6: 24px;
+        --space-7: 32px;
+        --space-8: 48px;
+    }
+
+    .topbar { padding: 8px 16px; gap: var(--space-3); }
+    .brand-text { display: none; }
+
+    .layout { padding: 16px 16px 32px; }
+    .prose { padding: 24px; border-radius: var(--radius); }
+
+    h1 { font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2rem); }
+    h2 { margin-top: var(--space-5); }
+
+    /* Обложка главной */
+    .hero h1 { font-size: clamp(1.7rem, 1.3rem + 2vw, 2.2rem); }
+    .hero-subtitle { font-size: 1rem; }
+    .hero-actions { flex-direction: column; align-items: stretch; }
+    .hero-actions .btn { width: 100%; }
+
+    /* Информационные блоки */
+    .info-block { padding: var(--space-4); gap: var(--space-4); }
+
+    /* Раскрывающиеся блоки: минимум отступов */
+    details.solution-details > summary { padding: 10px 12px; }
+    details.solution-details > *:not(summary) { padding-left: var(--space-3); padding-right: var(--space-3); }
+
+    /* Заголовок теста */
+    .quiz-header { flex-direction: column; align-items: stretch; gap: var(--space-2); }
+
+    /* Результаты */
+    .results-hero { padding: var(--space-4); }
+    .result-dial { width: 120px; height: 120px; }
+    .result-dial-value { font-size: 1.4rem; }
+
+    /* Сетка маршрута */
+    .route { grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+
+    /* Формулы */
+    .formula { padding: var(--space-3); font-size: 1em; }
+
+    /* Футер */
+    .footer-inner { grid-template-columns: 1fr; gap: var(--space-4); }
+    .footer-meta { flex-direction: column; align-items: flex-start; }
+}
+
+/* ---------- 5. Телефоны (≤560) ---------- */
+@media (max-width: 560px) {
+    :root {
+        --fs-base: 15.5px;
+        --space-5: 20px;
+        --space-6: 24px;
+        --space-7: 28px;
+    }
+
+    html, body { font-size: var(--fs-base); }
+    body { line-height: 1.6; }
+
+    .topbar { padding: 6px 12px; gap: 8px; }
+    .brand-mark { min-width: 40px; height: 32px; padding: 0 8px; font-size: 0.85rem; }
+    .theme-toggle { width: 34px; height: 34px; }
+    .menu-toggle { width: 36px; height: 36px; }
+
+    .layout { padding: 12px 12px 24px; gap: 12px; }
+    .prose { padding: 18px; border-radius: var(--radius-sm); }
+
+    h1 { font-size: 1.55rem; }
+    h2 { font-size: 1.2rem; margin-top: var(--space-5); }
+    h3 { font-size: 1.05rem; }
+
+    p, li { max-width: 100%; }
+
+    /* Обложка */
+    .hero { padding: 20px; gap: 20px; }
+    .hero-tag { font-size: 0.7rem; padding: 3px 10px; }
+    .hero h1 { font-size: 1.7rem; }
+    .hero-subtitle { font-size: 0.98rem; }
+    .hero-description { font-size: 0.95rem; }
+    .hero-meta { flex-direction: column; gap: 6px; font-size: 0.85rem; }
+
+    /* Сетки */
+    .feature-grid { grid-template-columns: 1fr; gap: var(--space-3); }
+    .feature-card { padding: var(--space-4); }
+    .route { grid-template-columns: 1fr; gap: var(--space-2); }
+    .route-step { padding: var(--space-3); }
+    .info-block { padding: var(--space-4); }
+
+    /* Формулы и таблицы */
+    .formula { padding: var(--space-3) var(--space-2); font-size: 0.95em; }
+    .table-wrap {
+        margin-left: -12px;
+        margin-right: -12px;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+    }
+    .calc-table th, .calc-table td { padding: 6px 8px; font-size: 0.82rem; }
+
+    /* Примеры */
+    .example { padding: var(--space-4) 0; }
+    .example-plan { padding: var(--space-2) var(--space-3); }
+
+    /* Раскрытие */
+    details.solution-details > summary { font-size: 0.92rem; }
+
+    /* Лаборатория */
+    .point-row { grid-template-columns: 1fr 1fr auto; gap: 6px; }
+    .point-row input { padding: 7px 8px; font-size: 0.9rem; }
+    .btn-remove { width: 32px; height: 32px; }
+    .lab-buttons { flex-direction: column; align-items: stretch; }
+    .lab-buttons .btn { width: 100%; }
+    .manual-coeffs { flex-direction: column; align-items: stretch; }
+    .manual-coeffs input { width: 100%; }
+
+    /* Практика и тест */
+    .practice-card, .quiz-question { padding: var(--space-4); }
+    .option { padding: 9px 12px; font-size: 0.95rem; }
+    .practice-actions, .quiz-actions { flex-direction: column; align-items: stretch; }
+    .practice-actions .btn, .quiz-actions .btn { width: 100%; }
+    .practice-input, .quiz-input { flex-direction: column; align-items: stretch; gap: 6px; }
+    .practice-input input, .quiz-input input { width: 100%; }
+
+    /* Результаты */
+    .results-hero { padding: var(--space-4); }
+    .result-dial { width: 110px; height: 110px; }
+    .result-dial-value { font-size: 1.3rem; }
+    .results-grid { grid-template-columns: 1fr; }
+    .results-actions { flex-direction: column; }
+    .results-actions .btn { width: 100%; }
+
+    /* Формулы справочника */
+    .formula-grid { grid-template-columns: 1fr; }
+    .formula-card { padding: var(--space-3); }
+
+    /* Кнопка возврата наверх и уведомления */
+    .to-top { right: 12px; bottom: 12px; width: 40px; height: 40px; }
+    .toast { right: 12px; left: 12px; bottom: 64px; max-width: none; }
+
+    /* Футер */
+    .footer-inner { padding: var(--space-4) 12px; }
+    .footer-meta { padding: var(--space-3) 12px; font-size: 0.72rem; }
+}
+
+/* ---------- 6. Очень маленькие экраны (≤390) ---------- */
+@media (max-width: 390px) {
+    :root { --fs-base: 15px; }
+
+    .brand-mark { min-width: 36px; height: 30px; padding: 0 6px; font-size: 0.8rem; }
+
+    .prose { padding: 16px; }
+    h1 { font-size: 1.4rem; }
+    h2 { font-size: 1.1rem; }
+
+    .hero { padding: 16px; }
+    .hero h1 { font-size: 1.5rem; }
+
+    .calc-table th, .calc-table td { padding: 5px 6px; font-size: 0.78rem; }
+}
+
+/* ---------- 7. Совсем узкие (≤320) ---------- */
+@media (max-width: 320px) {
+    :root { --fs-base: 14.5px; }
+
+    .topbar { padding: 5px 8px; gap: 6px; }
+    .brand-mark { min-width: 32px; height: 28px; padding: 0 5px; font-size: 0.75rem; }
+    .menu-toggle, .theme-toggle { width: 32px; height: 32px; }
+
+    .layout { padding: 10px 10px 20px; }
+    .prose { padding: 14px; }
+
+    h1 { font-size: 1.3rem; }
+    h2 { font-size: 1.05rem; }
+
+    .hero h1 { font-size: 1.35rem; }
+    .hero-subtitle { font-size: 0.9rem; }
+
+    .btn { padding: 9px 14px; font-size: 0.88rem; min-height: 38px; }
+
+    .point-row input { padding: 6px; font-size: 0.85rem; }
+    .btn-remove { width: 28px; height: 28px; font-size: 0.95rem; }
+}
+
+/* ---------- 8. Очень широкие экраны (≥1800) ---------- */
+@media (min-width: 1800px) {
+    :root {
+        --content-max: 1440px;
+        --prose-max: 860px;
+        --fs-base: 18px;
+    }
+    .layout { gap: 56px; }
+}
+
+/* ---------- 9. Печать ---------- */
+@media print {
+    .topbar, .sidebar, .footer, .to-top, .toast, .menu-toggle,
+    .theme-toggle, .hero-actions, .btn, .quiz-actions, .practice-actions {
+        display: none !important;
+    }
+
+    .layout { grid-template-columns: 1fr; padding: 0; gap: 0; }
+    .content { max-width: none; }
+    .prose {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        background: #FFFFFF;
+        color: #000000;
+    }
+
+    a { color: #000000; text-decoration: underline; }
+    a[href]::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #444444; }
+
+    h1, h2, h3 { color: #000000; break-after: avoid; }
+    .formula, .table-wrap, .example, details {
+        break-inside: avoid;
+    }
+    details[open] > summary { display: none; }
+    details > *:not(summary) { display: block !important; }
+}
